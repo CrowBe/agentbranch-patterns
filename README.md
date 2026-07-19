@@ -15,21 +15,37 @@ server.
 
 Building agents produces hard-won, transferable knowledge: how to word a tool
 description so a model picks the right tool, when to split work across
-sub-agents, how to structure an eval that catches real regressions. Today that
-knowledge is scattered across blog posts, docs, and people's heads — and none of
-it is reachable by the agent that needs it *mid-task*.
+sub-agents, how to structure an eval that catches real regressions. The leading
+edge of that knowledge lives in practitioners' posts, threads, and repos —
+moving faster than official documentation and far faster than model training
+data — with no provenance attached and no stable way to cite or serve it.
 
-agentbranch-patterns puts that knowledge where agents work:
+agentbranch-patterns exists to solve one concrete problem first: people
+authoring and validating skills with
+[agent.branch](https://github.com/CrowBe/agentbranch) need current, citable
+agentic-setup knowledge to build against. The corpus is that source, and it is
+public — the same knowledge serves any MCP-capable agent or human reader:
 
 - **Patterns, not prose.** Each entry is a structured document with a fixed
   arc — problem → pattern → example → tradeoffs → anti-patterns — served whole,
   because the tradeoffs and anti-patterns are the part most collections omit
   and agents most need.
+- **Leading edge, not received wisdom.** The corpus deliberately excludes what
+  frontier models already reliably know: restatements of vendor documentation
+  and long-settled practice don't merge. The target is fresh practitioner
+  knowledge that carries an observable validity signal — adoption, engagement,
+  reproduction in other people's public work.
 - **Provenance, always.** Every pattern cites its evidence: primary
-  documentation, published research, or validated field experience. Every
-  pattern declares its maturity honestly — `proven`, `emerging`, or
-  `contested` — so the knowledge base can hold strong and weak evidence without
-  pretending they're the same.
+  documentation, published research, practitioner publications with observable
+  adoption, or validated field experience. Every pattern declares its maturity
+  honestly — `proven`, `emerging`, or `contested` — and maturity is
+  freshness-weighted: recent evidence outweighs accumulated stale citations,
+  because the field moves faster than bibliographies do.
+- **Scoped honestly.** Every pattern declares whether it is generically
+  useful or specific to a domain of agentic work. As agents cross from
+  software engineering into other knowledge work, "works in coding agents"
+  stops being evidence of "works everywhere" — the schema keeps the two
+  claims apart.
 - **Git-native and hash-pinnable.** The repository *is* the database. Patterns
   are markdown files, contributions are pull requests, CI validates the schema,
   and every pattern carries a content hash so consumers can pin exactly what
@@ -42,15 +58,18 @@ The content is the product. The server is a thin, boring way to reach it.
 
 ## Who it's for
 
-- **Agents mid-task.** An agent scaffolding a new tool, writing a skill, or
-  designing an eval queries the knowledge base and gets ranked, cited answers
-  it can act on immediately.
+- **Skill builders.** The motivating consumer:
+  [agent.branch](https://github.com/CrowBe/agentbranch) users authoring and
+  validating skills draw on the corpus — directly, and through agent.branch's
+  own use of the public tools — for current, cited answers to setup questions.
+- **Agents mid-task.** Documents are structured so an agent scaffolding a new
+  tool, writing a skill, or designing an eval can query the knowledge base and
+  get ranked, cited answers it can act on immediately.
 - **Agent builders.** Humans designing agentic systems can browse the same
   corpus directly on GitHub — every pattern is a readable document.
-- **Tooling authors.** Tools that generate or validate agent setups (the first
-  consumer is [agent.branch](https://github.com/CrowBe/agentbranch), a skill
-  authoring and validation tool) can build on the corpus through the same three
-  MCP tools everyone else uses. There is no privileged integration path.
+
+agent.branch has no privileged integration path: it builds on the corpus
+through the same three MCP tools everyone else uses.
 
 ## Using it from an agent
 
@@ -93,7 +112,8 @@ server and the skill are two views of one corpus, never two sources of truth.
 
 Every pattern is a markdown file with YAML frontmatter, under
 `patterns/<category>/<slug>.md`. The frontmatter carries identity, category,
-tags, maturity, lifecycle status, and provenance; the body follows a fixed
+tags, aliases, applicability, maturity, lifecycle status, and provenance; the
+body follows a fixed
 section order (Problem, Pattern, Example, Tradeoffs, Anti-patterns). The full
 schema is in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#the-pattern-schema).
 
@@ -118,7 +138,9 @@ Contribution is open; acceptance is curated. In short:
 The acceptance bar (what counts as evidence, what's in scope, what gets a
 pattern rejected) and the review process are defined in
 [docs/GOVERNANCE.md](docs/GOVERNANCE.md). Read it before writing — the bar is
-deliberately high, and the most common rejection is "true but not a pattern."
+deliberately high, and the two most common rejections are "true but not a
+pattern" and "true but already in the weights" (knowledge frontier models
+apply reliably without help).
 
 ## License
 
@@ -130,7 +152,8 @@ it lands) under Apache-2.0. Rationale in
 ## Related projects
 
 - [CrowBe/agentbranch](https://github.com/CrowBe/agentbranch) — skill
-  authoring and validation tool; first consumer of this knowledge base.
+  authoring and validation tool; the motivating consumer of this knowledge
+  base.
 - [CrowBe/agentbranch-tap](https://github.com/CrowBe/agentbranch-tap) — public
   distribution tap for agent.branch.
 
