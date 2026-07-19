@@ -22,6 +22,15 @@ is only worth something if someone is accountable for holding it.
   reviewers-by-comment, staleness reporters. No sign-up, no CLA — the
   license grant in a PR (see [License](#license)) is the whole agreement.
 
+**Bootstrap phase.** The project currently has a single maintainer, and every
+rule below that presumes a group — second approvals, dispute escalation,
+consensus — activates only once a second maintainer exists. Until then, the
+second-approval requirement for `safety`-category patterns and for changes to
+the trust model or schema is replaced by an extended open-comment window of
+seven days, and process disputes have no appeal beyond the sole maintainer.
+That is a real cost, stated rather than papered over; it ends when the
+maintainer count does.
+
 ## Contributing a pattern
 
 1. **Search first.** Check `patterns/` (or `search_patterns`) for the idea
@@ -47,33 +56,52 @@ merged on sight.
 
 ## The acceptance bar
 
-A pattern merges when a reviewing maintainer can answer yes to all five:
+A pattern merges when a reviewing maintainer can answer yes to all six:
 
 1. **Is it a pattern?** A recurring problem plus a named, reusable
-   prescription. The most common rejection is *true but not a pattern*:
+   prescription. A common rejection is *true but not a pattern*:
    one-off war stories, product tips tied to a single vendor's UI, and
    observations with no prescription all fail here — regardless of quality.
 2. **Is it in scope?** Agentic setup, per the category taxonomy. A pattern
    that fits no category is either out of scope or evidence for a taxonomy
    PR — the reviewer says which.
-3. **Is the evidence real?** Every provenance entry must be checkable:
-   `primary-docs` and `research` entries have working, relevant URLs;
-   `field-report` entries describe what was observed concretely enough that
-   a reader could attempt the same observation. Maturity must match the
-   evidence: `proven` requires multiple independent entries, at least one
-   `primary-docs` or `research` among them, and no credible published
-   counter-evidence; conflicting credible evidence *requires* `contested`
-   with the disagreement presented in Tradeoffs.
-4. **Are the costs stated?** A Tradeoffs section that says "none significant"
+3. **Is it beyond the model?** A pattern that restates vendor documentation
+   or practice a current frontier model already reliably applies unprompted
+   is rejected regardless of quality — that knowledge ships inside the
+   consumer, and retrieving it adds nothing. The quick test: give a frontier
+   model the Problem section cold; if it reliably produces the prescription,
+   the pattern fails. Vendor docs may still appear in provenance — as
+   corroboration for a prescription that goes beyond them, never as its
+   source of novelty. The rejection phrase here is *true but already in the
+   weights*.
+4. **Is the evidence real, current, and honestly scoped?** Every provenance
+   entry must be checkable: `primary-docs` and `research` entries have
+   working, relevant URLs; `practitioner` entries have working URLs and a
+   stated adoption signal a reviewer can observe (engagement, reproduction in
+   unrelated public work); `field-report` entries describe what was observed
+   concretely enough that a reader could attempt the same observation, and
+   are marked "internal; not publicly reproducible" when they are — internal
+   reports corroborate but never anchor `proven` alone. Freshness outweighs
+   mass: evidence predating a material change in what it describes stops
+   counting. Maturity must match the evidence per the thresholds in
+   [ARCHITECTURE.md](ARCHITECTURE.md#the-pattern-schema); conflicting
+   credible evidence *requires* `contested` with the disagreement presented
+   in Tradeoffs. Applicability must match it too: single-domain evidence
+   means `domain-specific` with the domain named — claiming `general`, like
+   claiming `proven`, is a reviewable assertion, not a self-assessment.
+5. **Are the costs stated?** A Tradeoffs section that says "none significant"
    is a rejection. If the author can't name what the pattern costs, the
    pattern isn't understood well enough to publish.
-5. **Is the voice safe?** Descriptive voice throughout, no instructions aimed
-   at the reading agent, no fetch-and-follow constructions, no code presented
-   as something to execute rather than something to learn from — per the
-   trust model in [ARCHITECTURE.md](ARCHITECTURE.md#trust-model). Voice
-   violations are fixed or rejected, never waived: this is the
-   injection-surface control, and one waived exception sets the precedent
-   that ends it.
+6. **Is the voice safe — and the substance?** Descriptive voice throughout,
+   no instructions aimed at the reading agent, no fetch-and-follow
+   constructions, no code presented as something to execute rather than
+   something to learn from — per the trust model in
+   [ARCHITECTURE.md](ARCHITECTURE.md#trust-model). Voice violations are fixed
+   or rejected, never waived: this is the injection-surface control, and one
+   waived exception sets the precedent that ends it. Voice covers phrasing
+   only, so the reviewer also owns the substance check: a prescription or
+   Example the reviewer cannot personally vouch as safe for consumers to
+   pattern-match into real systems is rejected, however well it reads.
 
 ## Review process
 
@@ -83,9 +111,10 @@ A pattern merges when a reviewing maintainer can answer yes to all five:
   contribution. Two exceptions in opposite directions: typo-level fixes skip
   the window; changes to `safety`-category patterns and anything touching the
   trust model or schema require a second maintainer approval, because errors
-  there compound into consumers.
+  there compound into consumers (during the single-maintainer bootstrap
+  phase, the substitute in [Roles](#roles) applies).
 - **Reviews leave a trail.** Acceptance and rejection reasons live on the PR,
-  stated against the five acceptance criteria. "Not a good fit" without a
+  stated against the six acceptance criteria. "Not a good fit" without a
   criterion is not a valid rejection.
 - **Author responsiveness:** PRs with unanswered review feedback for 30 days
   are closed as stale — reopenable any time; closure is queue hygiene, not
@@ -116,12 +145,20 @@ retirement, hash-pin behavior) are defined in
 - **Anyone can report staleness** by opening an issue naming the pattern and
   the evidence that undermines it. A staleness issue is triaged like a PR:
   against the evidence, in the open.
-- **Scheduled review sweeps:** every six months, maintainers re-examine every
-  `active` pattern whose `updated` date is older than twelve months, asking
+- **Scheduled review sweeps:** every three months, maintainers re-examine
+  every `active` pattern whose `updated` date is older than six months, asking
   one question — *would this merge today?* Outcomes: reconfirm (bump
   `updated` with a provenance addition if new supporting evidence exists),
   demote maturity, supersede, or retire. Sweeps are tracked in a public
-  issue per sweep.
+  issue per sweep. The cadence is aggressive on purpose: a corpus that lives
+  at the leading edge decays faster than one that curates settled consensus,
+  and the beyond-the-model test cuts both ways — a pattern that was beyond
+  the model at merge time gets absorbed into later model generations, at
+  which point it retires as *absorbed*, its job done.
+- **Event-driven sweeps:** a major release or behavior change in a
+  widely-used platform (model family, agent runtime, protocol) triggers a
+  targeted sweep of the categories and domains it touches, without waiting
+  for the calendar.
 - **Supersession is preferred over heavy revision.** When the prescription
   itself changes, publish a successor and flip the old pattern to
   `superseded` rather than rewriting it in place — consumers who reviewed
@@ -160,6 +197,12 @@ Two licenses, split by what they cover:
   [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0). Permissive to
   keep adoption frictionless, chosen over MIT for the explicit patent grant —
   appropriate for infrastructure that organizations embed.
+
+Both license texts live at the repository root (`LICENSE` for Apache-2.0,
+`LICENSE-CONTENT` for CC BY 4.0). One boundary clarification: the tool
+contracts and schema shapes *described* in `docs/` exist to be implemented —
+implementing them creates no derivative work of the documentation, and their
+machine-readable form in `schema/` is Apache-2.0 like the rest of the code.
 
 By opening a PR, contributors license their contribution under the license
 covering the files it touches. That sentence is the project's entire
