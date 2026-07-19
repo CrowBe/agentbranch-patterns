@@ -8,6 +8,10 @@ summary: >
   every case sprawl instead of staying legible.
 category: skill-authoring
 tags: [skill-design, progressive-disclosure, instruction-design, anti-patterns]
+aliases: ["positive framing", "process skeleton", "writing great skills"]
+applicability: domain-specific
+domains: [software-engineering]         # evidence so far is one engineering
+                                        #   skills ecosystem
 maturity: emerging
 status: active
 created: 2026-07-19
@@ -16,18 +20,20 @@ supersedes: []
 superseded_by: null
 retired_reason: null
 provenance:
-  - type: primary-docs
+  - key: skills-wgs
+    type: practitioner
     source: "mattpocock/skills — docs/productivity/writing-great-skills.md"
     url: https://github.com/mattpocock/skills/blob/main/docs/productivity/writing-great-skills.md
+    excerpt: null   # TODO(review): verbatim quote required before merge
     date: 2026-07
-  - type: primary-docs
+    note: "TODO(review): quantify adoption signal with counts and an observation date."
+  - key: aihero-wgs
+    type: practitioner
     source: "AI Hero — The /writing-great-skills Skill"
     url: https://www.aihero.dev/skills-writing-great-skills
+    excerpt: null   # TODO(review): verbatim quote required before merge
     date: 2026-07
-  - type: primary-docs
-    source: "mattpocock/skills — CHANGELOG.md, v1.1.0 entry on writing-great-skills"
-    url: https://github.com/mattpocock/skills/blob/main/CHANGELOG.md
-    date: 2026-07
+    note: "TODO(review): quantify adoption signal with counts and an observation date."
 ---
 
 ## Problem
@@ -43,9 +49,10 @@ and full of language repeating things already said elsewhere in the file.
 Two things go wrong at once. First, naming the forbidden behavior makes it
 more available to the model, not less — telling an agent "don't touch the
 migration files" puts "migration files" in its attention when it wasn't
-there before. Second, a skill whose body is one clause taller every time
-someone hits an edge case stops being legible: the reader (human or model)
-can no longer tell the load-bearing steps from the accumulated exceptions.
+there before. [^skills-wgs] Second, a skill whose body is one clause taller
+every time someone hits an edge case stops being legible: the reader (human
+or model) can no longer tell the load-bearing steps from the accumulated
+exceptions.
 
 ## Pattern
 
@@ -59,7 +66,7 @@ needs it. Concretely:
   prohibition about the wrong one.
 - Reach for compact, pre-trained concepts as leading words — "tight,"
   "red," "tracer bullet" — that anchor a lot of behavior in a couple of
-  tokens instead of a paragraph of spelled-out constraint.
+  tokens instead of a paragraph of spelled-out constraint. [^skills-wgs]
 - Structure disclosure in a hierarchy: the top-level skill file states the
   steps; deeper detail, examples, and edge cases live in reference files
   the skill points to, so the top level stays scannable regardless of how
@@ -70,7 +77,7 @@ needs it. Concretely:
 - When a skill accumulates enough steps or enough optional sub-flows that
   no one can hold the whole thing in view, split it, or add a router skill
   that indexes the set and tells the caller which one applies — the fix for
-  sprawl is decomposition, not a longer document.
+  sprawl is decomposition, not a longer document. [^aihero-wgs]
 
 ## Example
 
@@ -114,7 +121,7 @@ whole process at a glance.
 - **The elephant problem (negation):** naming the forbidden behavior to
   rule it out ("don't hardcode the API key") raises its salience instead of
   suppressing it; state the correct action instead ("load the API key from
-  the config module").
+  the config module"). [^skills-wgs]
 - **Negative space:** silence on a decision doesn't stay neutral — it
   delegates that decision to whatever the model's priors happen to be.
   Omitting guidance on an important fork is a choice, just an unexamined

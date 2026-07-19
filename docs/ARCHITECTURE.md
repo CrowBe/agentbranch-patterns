@@ -109,11 +109,22 @@ retired_reason: null                    # required null unless status: retired;
                                         #   one sentence, e.g. "Invalidated by
                                         #   provider-side tool retry semantics."
 provenance:                             # required, 1+ entries
-  - type: primary-docs                  # primary-docs | research | field-report
+  - key: anthropic-tools                # required, lowercase-kebab, unique
+                                        #   within the pattern; cited from the
+                                        #   body as [^anthropic-tools]
+    type: primary-docs                  # primary-docs | research | practitioner
+                                        #   | field-report
     source: "Anthropic — Writing effective tools for agents"
     url: https://www.anthropic.com/engineering/writing-tools-for-agents
+    archived: null                      # optional, snapshot URL (e.g. Wayback)
+                                        #   captured at review time
+    excerpt: >                          # optional (required for practitioner):
+      Error messages should steer       #   verbatim quote, ≤40 words,
+      agents toward corrective          #   locatable by search in the source
+      actions.
     date: 2025-09
-  - type: field-report
+  - key: branch-benchmark
+    type: field-report
     source: "agent.branch skill-validation corpus, 40-skill benchmark"
     date: 2026-05
     note: "Retry-success rate doubled when errors named the corrective action."
@@ -158,6 +169,26 @@ Rules that don't fit in comments:
     not publicly inspectable must say so in the `note` ("internal; not
     publicly reproducible"); they corroborate other evidence but never anchor
     `proven` on their own.
+- **Load-bearing claims cite their evidence inline.** Every provenance entry
+  carries a `key`, and body sentences making a quantitative, comparative, or
+  causal claim cite the entry that backs them as `[^key]`. CI checks the
+  linkage in both directions: every `[^key]` marker resolves to a provenance
+  entry, and every provenance entry is cited at least once — an uncited entry
+  is décor, not evidence, and gets removed rather than kept for atmosphere.
+  Lint additionally flags claim-shaped sentences (numbers, superlatives,
+  comparatives) that carry no citation for reviewer attention; the flag
+  prompts judgment, it does not auto-reject.
+- **Excerpts pin what a source actually said.** The optional `excerpt` field
+  (required for `practitioner` entries) carries a short verbatim quote — 40
+  words or fewer, locatable by search in the source — and the optional
+  `archived` field carries a snapshot URL captured at review time. Together
+  they keep the claim→source link inspectable without dereferencing anything,
+  and they survive link rot: a dead URL degrades an entry's checkability only
+  to what the excerpt and archive preserved, instead of to zero.
+- **Adoption signals are numbers, not adjectives.** A `practitioner` entry's
+  `note` records the signal as observed quantities on a date ("~2.1k reposts;
+  reproduced in three unrelated public repos; observed 2026-06-30"), never as
+  "widely adopted" — an impression can't be re-checked; a count can.
 - **Maturity is set by evidence, not enthusiasm — and evidence ages**
   (thresholds in [GOVERNANCE.md](GOVERNANCE.md#the-acceptance-bar)):
   - `proven` — multiple independent, still-current provenance entries, at
@@ -193,7 +224,10 @@ Five sections, `##`-level, in this order, all required:
 No other `##` sections. Related patterns are referenced inline by slug in
 backticks (e.g. `` `one-tool-one-job` ``) rather than a dedicated section, so
 relationships live next to the reasoning that justifies them; CI checks that
-referenced slugs exist.
+referenced slugs exist. Provenance citations follow the same inline
+principle: `[^key]` markers tie load-bearing claims to the provenance
+entries that back them, so evidence sits next to the claim it supports and
+CI can verify the linkage both ways (see the frontmatter rules).
 
 Patterns are served whole. A pattern's value is its full arc — problem through
 anti-patterns — so nothing in this system chunks, truncates, or excerpts a
@@ -257,11 +291,13 @@ supersedes: []
 superseded_by: null
 retired_reason: null
 provenance:
-  - type: primary-docs
+  - key: anthropic-tools
+    type: primary-docs
     source: "Anthropic — Writing effective tools for agents"
     url: https://www.anthropic.com/engineering/writing-tools-for-agents
     date: 2025-09
-  - type: field-report
+  - key: branch-retry-benchmark
+    type: field-report
     source: "agent.branch validation harness, tool-retry benchmark"
     date: 2026-05
     note: "Retry-success rate roughly doubled when errors named the corrective action. Internal; not publicly reproducible."
@@ -289,11 +325,13 @@ supersedes: []
 superseded_by: null
 retired_reason: null
 provenance:
-  - type: primary-docs
+  - key: anthropic-context
+    type: primary-docs
     source: "Anthropic — Effective context engineering for AI agents"
     url: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
     date: 2025-09
-  - type: research
+  - key: long-context-studies
+    type: research
     source: "Context-window degradation studies (long-context recall benchmarks)"
     date: 2025
 ---
@@ -322,16 +360,20 @@ supersedes: []
 superseded_by: null
 retired_reason: null
 provenance:
-  - type: primary-docs
+  - key: skills-spec
+    type: primary-docs
     source: "Agent Skills specification — description field guidance"
     url: https://code.claude.com/docs/en/skills
     date: 2025-10
-  - type: practitioner
+  - key: trigger-thread
+    type: practitioner
     source: "Practitioner thread on trigger-led skill descriptions"
     url: https://x.com/<author>/status/<id>   # placeholder — real entries carry the live URL
+    excerpt: "<verbatim quote from the thread>"  # placeholder — required for practitioner
     date: 2026-06
-    note: "Adoption signal: high engagement on the original; phrasing style reproduced in several unrelated public skill repositories."
-  - type: field-report
+    note: "Adoption signal: ~1.4k reposts; phrasing style reproduced in 4 unrelated public skill repositories; observed 2026-06-30."
+  - key: branch-trigger-evals
+    type: field-report
     source: "agent.branch skill-triggering evals across baseline corpus"
     date: 2026-04
     note: "Trigger-phrase-led descriptions invoked correctly in significantly more task phrasings than content-summary descriptions. Internal; not publicly reproducible."
@@ -361,10 +403,12 @@ supersedes: []
 superseded_by: null
 retired_reason: null
 provenance:
-  - type: research
+  - key: outcome-benchmarks
+    type: research
     source: "Agentic benchmark design literature (outcome-based harnesses, e.g. SWE-bench family)"
     date: 2024
-  - type: field-report
+  - key: branch-harness-migration
+    type: field-report
     source: "agent.branch eval harness migration from judge-scored transcripts to outcome checks"
     date: 2026-03
     note: "Transcript judging systematically rewarded verbose plausible failures; outcome checks did not. Internal; not publicly reproducible."
@@ -392,13 +436,16 @@ supersedes: []
 superseded_by: null
 retired_reason: null
 provenance:
-  - type: research
+  - key: persona-positive
+    type: research
     source: "Persona-prompting ablation studies reporting positive effects"
     date: 2023
-  - type: research
+  - key: persona-null
+    type: research
     source: "Follow-up ablations reporting null or negative effects on reasoning benchmarks"
     date: 2024
-  - type: field-report
+  - key: branch-persona-ablations
+    type: field-report
     source: "Internal agent.branch prompt ablations"
     date: 2026-02
     note: "No measurable capability difference; measurable tone and refusal-boundary differences. Internal; not publicly reproducible."

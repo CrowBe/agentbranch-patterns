@@ -8,6 +8,10 @@ summary: >
   until the human confirms shared understanding.
 category: workflow
 tags: [elicitation, planning, requirements, decision-tree]
+aliases: ["grilling", "requirements interview", "one question at a time"]
+applicability: domain-specific
+domains: [software-engineering]         # evidence so far is one engineering
+                                        #   skills ecosystem
 maturity: emerging
 status: active
 created: 2026-07-19
@@ -16,19 +20,20 @@ supersedes: []
 superseded_by: null
 retired_reason: null
 provenance:
-  - type: primary-docs
+  - key: skills-grilling
+    type: practitioner
     source: "mattpocock/skills — docs/productivity/grilling.md"
     url: https://github.com/mattpocock/skills/blob/main/docs/productivity/grilling.md
+    excerpt: null   # TODO(review): verbatim quote required before merge
     date: 2026-07
-  - type: primary-docs
+    note: "TODO(review): quantify adoption signal with counts and an observation date."
+  - key: skills-grill-docs
+    type: practitioner
     source: "mattpocock/skills — docs/engineering/grill-with-docs.md"
     url: https://github.com/mattpocock/skills/blob/main/docs/engineering/grill-with-docs.md
+    excerpt: null   # TODO(review): verbatim quote required before merge
     date: 2026-07
-  - type: field-report
-    source: "mattpocock/skills — README, citing The Pragmatic Programmer's \"no-one knows exactly what they want\""
-    url: https://github.com/mattpocock/skills
-    date: 2026-07
-    note: "Framed as the motivating rationale for shipping an interview step ahead of implementation across the engineering skill set, rather than treating the initial brief as sufficient."
+    note: "TODO(review): quantify adoption signal with counts and an observation date."
 ---
 
 ## Problem
@@ -51,24 +56,24 @@ Run a structured interview before any implementation step, shaped by the
 decision tree the brief actually implies:
 
 - Ask one question at a time and wait for the answer before asking the
-  next — never a bulk list. Sequential questioning walks down the
-  decision tree branch by branch, resolving dependencies between
+  next — never a bulk list. [^skills-grilling] Sequential questioning walks
+  down the decision tree branch by branch, resolving dependencies between
   decisions in order, so later questions can build on earlier answers
   instead of being asked in a vacuum.
 - Pair every question with a recommended answer, so confirming is often
   faster than composing a fresh response, and disagreement is cheap to
-  signal.
+  signal. [^skills-grilling]
 - Check what the existing codebase or docs can already answer before
   asking the human — a question the code settles on its own is noise, not
-  diligence.
+  diligence. [^skills-grill-docs]
 - Don't proceed to implementation until the human confirms that shared
   understanding has actually been reached; a brief interview that ends
   without confirmation is indistinguishable from no interview at all.
 - Persist the resolved answers rather than letting them evaporate at the
   end of the session — write sharpened terminology to a shared glossary
-  and reserve a decision record for the genuinely hard-to-reverse,
-  surprising calls, so the next session doesn't re-derive (or re-ask) the
-  same ground.
+  (per `domain-glossary-file-prevents-drift`) and reserve a decision record
+  for the genuinely hard-to-reverse, surprising calls, so the next session
+  doesn't re-derive (or re-ask) the same ground. [^skills-grill-docs]
 
 ## Example
 

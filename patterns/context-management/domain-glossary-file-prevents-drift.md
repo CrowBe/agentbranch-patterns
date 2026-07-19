@@ -7,6 +7,10 @@ summary: >
   drift across skills, prompts, and sessions.
 category: context-management
 tags: [memory-files, shared-vocabulary, progressive-disclosure, drift-prevention]
+aliases: ["project glossary", "ubiquitous language", "shared vocabulary file"]
+applicability: domain-specific
+domains: [software-engineering]         # evidence so far is one engineering
+                                        #   skills ecosystem
 maturity: emerging
 status: active
 created: 2026-07-19
@@ -15,14 +19,20 @@ supersedes: []
 superseded_by: null
 retired_reason: null
 provenance:
-  - type: primary-docs
+  - key: skills-context
+    type: practitioner
     source: "mattpocock/skills — CONTEXT.md"
     url: https://github.com/mattpocock/skills/blob/main/CONTEXT.md
+    excerpt: null   # TODO(review): verbatim quote required before merge
     date: 2026-07
-  - type: primary-docs
+    note: "TODO(review): quantify adoption signal (repo engagement, derivative use) with counts and an observation date."
+  - key: skills-grill-docs
+    type: practitioner
     source: "mattpocock/skills — docs/engineering/grill-with-docs.md"
     url: https://github.com/mattpocock/skills/blob/main/docs/engineering/grill-with-docs.md
+    excerpt: null   # TODO(review): verbatim quote required before merge
     date: 2026-07
+    note: "TODO(review): quantify adoption signal with counts and an observation date."
 ---
 
 ## Problem
@@ -50,10 +60,10 @@ term instead of re-explaining the concept inline:
 - One term per concept, with an explicit list of aliases that are *not*
   allowed to reappear in docs, skills, or prompts, so a reviewer has
   something concrete to reject a synonym against instead of relying on
-  memory of past usage.
+  memory of past usage. [^skills-context]
 - Write the definition the moment ambiguity actually surfaces — during an
   interview, a design discussion, a code review — rather than trying to
-  anticipate the whole vocabulary up front. A glossary built reactively from
+  anticipate the whole vocabulary up front. [^skills-grill-docs] A glossary built reactively from
   real confusion stays grounded; one drafted speculatively tends to define
   terms nobody ends up needing.
 - Treat the file as the terminology's single source of truth: when a skill
@@ -67,7 +77,7 @@ term instead of re-explaining the concept inline:
 
 ## Example
 
-A `CONTEXT.md` entry resolving a real ambiguity:
+A `CONTEXT.md` entry resolving a real ambiguity: [^skills-context]
 
 > **Issue tracker** — the hosting system (GitHub Issues, Linear, etc.) where
 > work units live. Not: backlog, backend, queue.

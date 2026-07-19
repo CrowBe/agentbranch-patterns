@@ -8,6 +8,12 @@ summary: >
   a frontier of resolvable work stays visible across sessions.
 category: workflow
 tags: [planning, issue-tracking, checkpointing, decomposition]
+aliases: ["wayfinder", "decision tickets", "map issue"]
+applicability: domain-specific
+domains: [software-engineering, content-creation]  # content-creation rests on
+                                        #   [^wayfinder-in-use]; one
+                                        #   practitioner across both, so not
+                                        #   yet `general`
 maturity: emerging
 status: active
 created: 2026-07-19
@@ -16,19 +22,26 @@ supersedes: []
 superseded_by: null
 retired_reason: null
 provenance:
-  - type: primary-docs
+  - key: skills-wayfinder
+    type: practitioner
     source: "mattpocock/skills — docs/engineering/wayfinder.md"
     url: https://github.com/mattpocock/skills/blob/main/docs/engineering/wayfinder.md
+    excerpt: null   # TODO(review): verbatim quote required before merge
     date: 2026-07
-  - type: primary-docs
+    note: "TODO(review): quantify adoption signal with counts and an observation date."
+  - key: aihero-wayfinder
+    type: practitioner
     source: "AI Hero — The /wayfinder Skill"
     url: https://www.aihero.dev/skills-wayfinder
+    excerpt: null   # TODO(review): verbatim quote required before merge
     date: 2026-07
-  - type: field-report
+    note: "TODO(review): quantify adoption signal with counts and an observation date."
+  - key: wayfinder-in-use
+    type: field-report
     source: "Matt Pocock on X, announcing /wayfinder in personal use"
     url: https://x.com/mattpocockuk/status/2072716979195326905
     date: 2026-07
-    note: "Self-reported use planning an entire course with the skill, closing in on ~100 separate grilling/prototyping/research sessions all contributing back to one central, growing map."
+    note: "Self-reported single-practitioner account: planning an entire course, closing in on ~100 separate grilling/prototyping/research sessions all contributing back to one central, growing map. Public but self-reported; corroborates, does not anchor."
 ---
 
 ## Problem
@@ -37,7 +50,7 @@ Some efforts are too large for one agent session to plan, let alone
 execute, and the standard fix — write a backlog of tickets up front — fails
 here for a specific reason: the sub-questions aren't known yet. The work is
 "wrapped in fog," where the path from here to the goal isn't visible until
-some of it has been walked. Writing tickets before a question can be stated
+some of it has been walked. [^skills-wayfinder] Writing tickets before a question can be stated
 precisely produces tickets that encode unexamined assumptions instead of
 real decisions, and nobody notices until an agent picks one up and
 discovers it doesn't actually specify anything actionable. Meanwhile a flat
@@ -49,7 +62,9 @@ because two tickets silently depended on the same unresolved question.
 ## Pattern
 
 Maintain a single index issue (a map) that holds the current state of an
-effort as a set of child decision tickets, rather than a flat backlog:
+effort as a set of child decision tickets, rather than a flat backlog — a
+structure that has carried on the order of a hundred sessions against one
+map in reported use [^wayfinder-in-use]:
 
 - Name the destination first — state the goal the map is charting a route
   toward, so scope has a boundary from the start.
@@ -57,14 +72,17 @@ effort as a set of child decision tickets, rather than a flat backlog:
   whether something is a ticket yet or still fog is whether you can state
   the question precisely *now* — if not, it isn't ready to become a ticket.
 - Convert fog into a ticket only at that point, and classify it: **HITL**
-  (needs a live human exchange to resolve) or **AFK** (a research task a
+  (needs a live human exchange to resolve — typically a
+  `grill-before-you-build` interview) or **AFK** (a research task a
   background subagent can resolve without the human present).
+  [^skills-wayfinder]
 - Use the issue tracker's native blocking relationships between tickets, so
   the current **frontier** — the set of open, unblocked tickets — is
   visible without anyone maintaining it by hand.
-- Resolve at most one ticket per session. Record the answer as a resolution
-  comment on the ticket before closing it, and append a single-line pointer
-  to a running "decisions so far" summary on the map issue.
+- Resolve at most one ticket per session. [^aihero-wayfinder] Record the
+  answer as a resolution comment on the ticket before closing it, and append
+  a single-line pointer to a running "decisions so far" summary on the map
+  issue.
 - If an initial look at the effort reveals it isn't actually foggy — the
   path is already knowable — stop; this pattern is overhead for work that a
   normal backlog already handles.
