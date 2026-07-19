@@ -44,8 +44,9 @@ maintainer count does.
    clears the `proven` bar; claiming `proven` is a reviewable assertion, not
    a self-assessment.
 3. **Open a PR** — one pattern per PR, so review quality doesn't degrade
-   across a batch. CI validates schema, slug uniqueness, cross-reference
-   integrity, and voice-lint; a red check means the PR isn't reviewable yet.
+   across a batch. CI validates schema, slug uniqueness, cross-reference and
+   citation integrity, and voice-lint; a red check means the PR isn't
+   reviewable yet.
 4. **Review happens in the open**, on the PR thread. Expect substantive
    pushback on evidence and scope; that's the product working.
 
@@ -76,19 +77,25 @@ A pattern merges when a reviewing maintainer can answer yes to all six:
    weights*.
 4. **Is the evidence real, current, and honestly scoped?** Every provenance
    entry must be checkable: `primary-docs` and `research` entries have
-   working, relevant URLs; `practitioner` entries have working URLs and a
-   stated adoption signal a reviewer can observe (engagement, reproduction in
-   unrelated public work); `field-report` entries describe what was observed
-   concretely enough that a reader could attempt the same observation, and
-   are marked "internal; not publicly reproducible" when they are — internal
-   reports corroborate but never anchor `proven` alone. Freshness outweighs
-   mass: evidence predating a material change in what it describes stops
-   counting. Maturity must match the evidence per the thresholds in
-   [ARCHITECTURE.md](ARCHITECTURE.md#the-pattern-schema); conflicting
-   credible evidence *requires* `contested` with the disagreement presented
-   in Tradeoffs. Applicability must match it too: single-domain evidence
-   means `domain-specific` with the domain named — claiming `general`, like
-   claiming `proven`, is a reviewable assertion, not a self-assessment.
+   working, relevant URLs; `practitioner` entries have working URLs, a
+   verbatim `excerpt`, and an adoption signal recorded as observed
+   quantities on a date (counts, not adjectives); `field-report` entries
+   describe what was observed concretely enough that a reader could attempt
+   the same observation, and are marked "internal; not publicly
+   reproducible" when they are — internal reports corroborate but never
+   anchor `proven` alone. Claims must be tied to entries: load-bearing
+   sentences carry `[^key]` citations, every entry is cited at least once,
+   and excerpts pin the sourced wording — so "is the evidence real" reduces
+   to checking that the source behind `[^key]` actually says what the
+   sentence claims, a mechanical question rather than an impression.
+   Freshness outweighs mass: evidence predating a material change in what it
+   describes stops counting. Maturity must match the evidence per the
+   thresholds in [ARCHITECTURE.md](ARCHITECTURE.md#the-pattern-schema);
+   conflicting credible evidence *requires* `contested` with the
+   disagreement presented in Tradeoffs. Applicability must match it too:
+   single-domain evidence means `domain-specific` with the domain named —
+   claiming `general`, like claiming `proven`, is a reviewable assertion,
+   not a self-assessment.
 5. **Are the costs stated?** A Tradeoffs section that says "none significant"
    is a rejection. If the author can't name what the pattern costs, the
    pattern isn't understood well enough to publish.
@@ -102,6 +109,18 @@ A pattern merges when a reviewing maintainer can answer yes to all six:
    only, so the reviewer also owns the substance check: a prescription or
    Example the reviewer cannot personally vouch as safe for consumers to
    pattern-match into real systems is rejected, however well it reads.
+
+The six criteria are not equally mechanizable, and the split is deliberate.
+Criterion 4 and the voice half of criterion 6 are largely checkable —
+citation linkage resolves both ways, URLs respond, excerpts are locatable in
+their sources, adoption signals carry numbers and dates, maturity and
+applicability match the entry counts and domains, voice-lint passes.
+Criteria 1, 2, 3, 5, and the substance half of 6 are editorial judgment:
+they *are* the curation, and turning them into rubrics would fill the corpus
+with well-cited mediocrity. What makes the judgment half accountable is not
+a checklist but the trail — a reviewer answers each criterion by name on the
+PR, and any answer can be challenged evidence-first through
+[Disputes](#disputes).
 
 ## Review process
 
